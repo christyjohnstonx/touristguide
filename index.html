@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+<title>Travel Accessible</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", Arial, Helvetica, sans-serif}
+.myLink {display: none}
+#map {
+        height: 450px;
+        width: 100%;
+      }
+
+.dropbtn {
+  background-color: lightgray;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  z-index: 1;
+}
+
+.dropbtn:hover, .dropbtn:focus {
+  background-color: red;
+}
+
+#myInput {
+  box-sizing: border-box;
+  background-position: 5px 12px;
+  background-repeat: no-repeat;
+  font-size: 16px;
+  text-align: left;
+  padding: 17px;
+  border: none;
+  border-bottom: 1px solid #f6f6f6;
+  background-color: #f6f6f6;
+}
+
+#myInput:focus {outline: 3px solid #f6f6f6;}
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  z-index: 1;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f6f6f6;
+  min-width: 460px;
+  overflow: scroll;
+  border: 1px solid #ddd;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown a:hover {background-color: #ddd;}
+
+.show {display: block;}
+
+.center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.border {
+  border-style: solid;
+  border-color: red;
+}
+
+</style>
+<body class="w3-light-grey">
+
+<!-- Navigation Bar -->
+<div class="w3-bar w3-white w3-border-bottom w3-xlarge">
+  <a href="index.html" class="w3-bar-item w3-button w3-text-red w3-hover-red"><b><i class="fa fa-map-marker w3-margin-right"></i>Travel Accessible</b></a>
+<a href="#" class="w3-bar-item w3-button w3-right w3-hover-red w3-text-grey"><i class="fa fa-search"></i></a>
+</div>
+
+<!-- Header -->
+<header class="w3-display-container w3-content w3-hide-small" style="max-width:1500px">
+  <img class="w3-image" src="london2.jpg" alt="London" width="1500" height="700">
+  <div class="center">
+  <div class="w3-display-middle" style="width:65%">
+    <div class="w3-bar w3-black" style="width: 300px">
+      <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Search Destination');"></button><i class="fa fa-plane w3-margin-right"></i>Search Destinations</button>
+    </div></div>
+
+
+    <!-- Tabs -->
+    <div class="center">
+        <div class="border">
+    <div id="Search Destination" class="w3-container w3-white w3-padding-16 myLink" style="width: 600px">
+      <h3>Find Accessible Travel Destinations Today</h3>
+      <div class="w3-row-padding" style="margin:0 -15px; width: 550px;">
+        <div class="w3-half">
+          <h6>To</h6>
+          <div class="dropdown">
+                <button onclick="myFunction()" class="dropbtn" style="margin:0; width: 550px;">Destination</button>
+                <div id="myDropdown" class="dropdown-content">
+                  <input type="text" style="text-align:left" placeholder="Search..." id="myInput" onkeyup="filterFunction()">
+                  <a href="glasgow.html">Glasgow</a>
+                  <a href="london.html">London</a>
+                  <a href="paris.html">Paris</a>
+                  <a href="newyork.html">New York</a>
+                </div>
+              </div>
+            </div>
+              </div>
+              </div>
+            </div>
+    </div>
+</header>
+
+<!-- Page content -->
+
+  <div class="w3-content" style="max-width:1100px;">
+        <div class="w3-container w3-margin-top">
+            <h3>View Destinations on Maps</h3>
+        </div>
+    
+  <div id='map'></div>
+    <script>
+        function initMap(){
+            var options = {
+                zoom:2.5,
+                center:{lat:55.3781,lng:-3.4360}
+            }
+            
+            var map = new
+            google.maps.Map(document.getElementById('map'), options);
+
+            var markerGlasgow = new google.maps.Marker({
+              position:{lat:55.8642,lng:-4.3518},
+              map:map
+            });
+            var markerParis = new google.maps.Marker({
+              position:{lat:48.8566,lng:2.3522},
+              map:map
+            });
+            var markerNewYork = new google.maps.Marker({
+              position:{lat:40.7128,lng:-74.0060},
+              map:map
+            });
+            var markerLondon = new google.maps.Marker({
+              position:{lat:51.5074,lng:-0.1278},
+              map:map
+            });
+
+          
+    var markers = [
+        {
+          coords:{lat:55.8642,lng:-4.3518},
+          content:'<h1>Glasgow, Scotland</h1>'
+        },
+        {
+          coords:{lat:48.8566,lng:2.3522},
+          content:'<h1>Paris, France</h1>'
+        },
+        {
+          coords:{lat:40.7128,lng:-74.0060},
+          content:'<h1>New York, USA</h1>'
+        },
+        {
+          coords:{lat:51.5074,lng:-0.1278},
+          content:'<h1>London, England</h1>'
+        }
+      ];
+
+      for(var i = 0;i < markers.length;i++){
+        addMarker(markers[i]);
+      }
+
+
+      function addMarker(props){
+        var marker = new google.maps.Marker({
+          position:props.coords,
+          map:map,
+        });
+
+        if(props.iconImage){
+          marker.setIcon(props.iconImage);
+        }
+
+        if(props.content){
+          var infoWindow = new google.maps.InfoWindow({
+            content:props.content
+          });
+
+          marker.addListener('click', function(){
+            infoWindow.open(map, marker);
+          });
+        }
+      }
+
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBPIqkLx6dCNy8lvCHc-4gKjUUKM3G_eJ4&callback=initMap">
+    </script>
+
+  <!-- Good offers -->
+  <div class="w3-container w3-margin-top">
+    <h3>Popular Places Right Now</h3>
+  </div>
+  <div class="w3-row-padding w3-text-white w3-large">
+    <div class="w3-half w3-margin-bottom">
+      <div class="w3-display-container">
+        <img src="cinqueterre.jpg" alt="Cinque Terre" style="width:100%" >
+        <span class="w3-display-bottomleft w3-padding">Cinque Terre</span>
+      </div>
+    </div>
+    <div class="w3-half">
+      <div class="w3-row-padding" style="margin:0 -16px">
+        <div class="w3-half w3-margin-bottom">
+          <div class="w3-display-container">
+            <img src="newyork2.jpg" alt="New York" style="width:100%">
+            <span class="w3-display-bottomleft w3-padding">New York</span>
+          </div>
+        </div>
+        <div class="w3-half w3-margin-bottom">
+          <div class="w3-display-container">
+            <img src="sanfran.jpg" alt="San Francisco" style="width:100%">
+            <span class="w3-display-bottomleft w3-padding">San Francisco</span>
+          </div>
+        </div>
+      </div>
+      <div class="w3-row-padding" style="margin:0 -16px">
+        <div class="w3-half w3-margin-bottom">
+          <div class="w3-display-container">
+            <img src="pisa.jpg" alt="Pisa" style="width:100%">
+            <span class="w3-display-bottomleft w3-padding">Pisa</span>
+          </div>
+        </div>
+        <div class="w3-half w3-margin-bottom">
+          <div class="w3-display-container">
+            <img src="paris.jpg" alt="Paris" style="width:100%">
+            <span class="w3-display-bottomleft w3-padding">Paris</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- Explore Nature -->
+  <div class="w3-container">
+    <h3>Top Accessible Cities</h3>
+  </div>
+  <div class="w3-row-padding">
+    <div class="w3-half w3-margin-bottom">
+      <img src="Berlin.jpg" alt="Germany" style="width:100%">
+      <div class="w3-container w3-white">
+        <h3>Berlin, Germany</h3>
+        <p class="w3-opacity"></p>
+        <p>Berlin is a very flat city; it is perfect for people in wheelchairs or those who might find it difficult to walk on steep streets. Hundreds of hotels are accessible to them in Berlin. The Berlin Zoo is perfect for both young and old, as well as the main parks of the city and the many museums in Berlin.</p>
+      </div>
+    </div>
+    <div class="w3-half w3-margin-bottom">
+      <img src="Vienna.jpg" alt="Austria" style="width:100%">
+      <div class="w3-container w3-white">
+        <h3>Vienna, Austria</h3>
+        <p class="w3-opacity"></p>
+        <p>Vienna is a must see tourist destination probably because the inhabitants do their best to welcome the visitors from all over the world. They offer them the best comfort with the best accessibility to the hotels, attractions, theatres, opera, cinemas, restaurants and public transports.</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Contact -->
+  <div class="w3-container">
+    <h2>Contact Us</h2>
+    <p>Let us find your next holiday destination!</p>
+    <i class="fa fa-map-marker" style="width:30px"></i>Glasgow, Scotland<br>
+    <i class="fa fa-phone" style="width:30px"></i> Phone: +44 1256278390 <br>
+    <i class="fa fa-envelope" style="width:30px"> </i> Email: mail@mail.com<br>
+    <form action="/action_page.php" target="_blank">
+      <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Name" required name="Name"></p>
+      <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Email" required name="Email"></p>
+      <p><input class="w3-input w3-padding-16 w3-border" type="text" placeholder="Message" required name="Message"></p>
+      <p><button class="w3-bar-item w3-button w3-right w3-hover-red w3-text-grey" type="submit"><a href="index.html">SEND MESSAGE</a></button></p>
+    </form>
+  </div>
+  
+<!-- End page content -->
+</div>
+
+<!-- Footer -->
+<footer class="w3-container w3-center w3-opacity w3-margin-bottom">
+  <h5>Find Us On</h5>
+  <div class="w3-xlarge w3-padding-16">
+    <i class="fa fa-facebook-official w3-hover-opacity"></i>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
+    <i class="fa fa-snapchat w3-hover-opacity"></i>
+    <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+    <i class="fa fa-twitter w3-hover-opacity"></i>
+    <i class="fa fa-linkedin w3-hover-opacity"></i>
+  </div>
+  <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank" class="w3-hover-text-green">w3.css</a></p>
+</footer>
+
+<script>
+// Tabs
+function openLink(evt, linkName) {
+  var i, x, tablinks;
+  x = document.getElementsByClassName("myLink");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < x.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+  }
+  document.getElementById(linkName).style.display = "block";
+  evt.currentTarget.className += " w3-red";
+}
+
+// Click on the first tablink on load
+document.getElementsByClassName("tablink")[0].click();
+</script>
+<script>
+        /* When the user clicks on the button,
+        toggle between hiding and showing the dropdown content */
+        function myFunction() {
+          document.getElementById("myDropdown").classList.toggle("show");
+        }
+        
+        function filterFunction() {
+          var input, filter, ul, li, a, i;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          div = document.getElementById("myDropdown");
+          a = div.getElementsByTagName("a");
+          for (i = 0; i < a.length; i++) {
+            txtValue = a[i].textContent || a[i].innerText;
+            if (txtValue.toUpperCase().indexOf(filter) > -1) {
+              a[i].style.display = "";
+            } else {
+              a[i].style.display = "none";
+            }
+          }
+        }
+        </script>
+
+</body>
+</html>
+
